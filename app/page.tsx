@@ -14,7 +14,7 @@ const Home = () => {
         className="text-center max-w-3xl"
       >
         <h1 className="text-5xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-amber-400 to-pink-500 mb-4">
-          Hi, I'm Dinuka Priyanath
+          Hi, I'm Dinuka Priyanath De Silva
         </h1>
 
         <TypewriterEffect
