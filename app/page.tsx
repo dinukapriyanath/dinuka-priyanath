@@ -1,11 +1,87 @@
 'use client';
-import React from 'react';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
+import ProjectsSlider from '@/components/projects';
 
 
 const Home = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      // ✨ Background gradient fade-in
+      gsap.fromTo(
+        ".hero-bg",
+        { opacity: 0 },
+        { opacity: 1, duration: 1.5, ease: "power2.out" }
+      );
+
+      // 🚀 Staggered text + button animations
+      tl.fromTo(
+        ".hero-title",
+        { opacity: 0, y: 100 },
+        { opacity: 1, y: 0, duration: 1.2 }
+      )
+        .fromTo(
+          ".hero-sub",
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 1 },
+          "-=0.8"
+        )
+        .fromTo(
+          ".hero-buttons > *",
+          { opacity: 0, y: 30, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, stagger: 0.2, duration: 0.8 },
+          "-=0.6"
+        )
+
+
+       gsap.fromTo(
+          ".hero-de",
+          { opacity: 1, scale: 1 }, // start
+          {
+            opacity: 1,
+            scale: 1.5,              // scale up
+            duration: 0.6,
+            ease: "power2.out",
+            yoyo: true,              // go back to start
+            repeat: 1                // only bounce once
+          }
+        );
+
+
+    }, heroRef);
+
+    // 🎮 Mouse parallax effect
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth - 0.5) * 30; // tilt range
+      const y = (e.clientY / innerHeight - 0.5) * 30;
+
+      gsap.to(".hero-title", { x: x * 0.6, y: y * 0.6, duration: 0.6 });
+      gsap.to(".hero-sub", { x: x * 0.3, y: y * 0.3, duration: 0.6 });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      ctx.revert();
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+
+
+
+
+
+
+
   return (
     <main className="relative text-white overflow-hidden">
       {/* 🔥 Background Video */}
@@ -24,53 +100,46 @@ const Home = () => {
     
 
       {/* 🎯 Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20">
-        <motion.h1
-          className="text-5xl md:text-7xl font-bold leading-tight mb-6 z-10"
-          initial={{ opacity: 0, y: 60 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-        >
-          Dinuka Priyanath De Silva
-        </motion.h1>
+      <section
+      ref={heroRef}
+      className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 overflow-hidden"
+    >
+      {/* 🔮 Animated Gradient Background */}
+      <div className="hero-bg absolute inset-0 opacity-70" />
 
-        <motion.p
-          className="text-lg md:text-xl text-gray-200 max-w-2xl z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          I build elegant full-stack web applications with great design, performance, and user experience.
-        </motion.p>
+      {/* Content */}
+      <h1 className="hero-title text-5xl md:text-7xl font-bold leading-tight mb-6 z-10 relative">
+        Dinuka Priyanath <span className="hero-de text-green-500">De</span> Silva
+      </h1>
 
-        <motion.div
-          className="mt-10 flex gap-4 z-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
+      <p className="hero-sub text-lg md:text-xl text-gray-200 max-w-2xl z-10 relative">
+        I build elegant full-stack web applications with great design,
+        performance, and user experience.
+      </p>
+
+      <div className="hero-buttons mt-10 flex gap-4 z-10 relative">
+        <a
+          href="#projects"
+          className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition"
         >
-          <a
-            href="#projects"
-            className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition"
-          >
-            View Projects
-          </a>
-          <a
-            href="https://github.com/yourusername"
-            target="_blank"
-            className="text-white hover:text-blue-400"
-          >
-            <FaGithub size={28} />
-          </a>
-          <a
-            href="https://linkedin.com/in/yourprofile"
-            target="_blank"
-            className="text-white hover:text-pink-500"
-          >
-            <FaLinkedin size={28} />
-          </a>
-        </motion.div>
-      </section>
+          View Projects
+        </a>
+        <a
+          href="https://github.com/yourusername"
+          target="_blank"
+          className="text-white hover:text-blue-400"
+        >
+          <FaGithub size={28} />
+        </a>
+        <a
+          href="https://linkedin.com/in/yourprofile"
+          target="_blank"
+          className="text-white hover:text-pink-500"
+        >
+          <FaLinkedin size={28} />
+        </a>
+      </div>
+    </section>
 
 
 
@@ -138,67 +207,103 @@ const Home = () => {
     </div>
   </div>
 </section>
-
-
-
-
-
-
-
-
-
-
 </section>
 
 
+{/* 🛠 Projects */}
 
-      {/* 🛠 Projects */}
-      <section id="projects" className="py-28 px-6 md:px-20 bg-black/70 backdrop-blur-lg">
-        <motion.h2
-          className="text-4xl font-bold mb-12"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          Projects
-        </motion.h2>
-        <div className="grid md:grid-cols-2 gap-10">
-          {[1, 2].map((_, i) => (
-            <motion.div
-              key={i}
-              className="p-6 bg-white/10 backdrop-blur-sm rounded-xl shadow-md border border-white/20"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: 'spring' }}
-            >
-              <h3 className="text-xl font-semibold mb-2">Project {i + 1}</h3>
-              <p className="text-gray-300">
-                This is a sleek project built with modern tech like Next.js, Tailwind CSS, and Framer Motion.
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+  <ProjectsSlider />
 
-      {/* 📩 Contact */}
-      <section id="contact" className="py-28 px-6 md:px-20 bg-black/60 backdrop-blur-2xl">
-        <motion.h2
-          className="text-4xl font-bold mb-4"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          Contact Me
-        </motion.h2>
-        <p className="text-gray-300 mb-6">
-          Have a project or idea? Let's collaborate!
-        </p>
+
+
+
+
+
+   {/* 📩 Contact */}
+<section
+  id="contact"
+  className="relative py-28 px-6 md:px-20 bg-gradient-to-br from-black via-gray-900 to-black text-white"
+>
+  <motion.h2
+    className="text-4xl font-bold mb-4 text-center"
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+  >
+    Get in Touch
+  </motion.h2>
+  <p className="text-gray-400 mb-10 text-center">
+    Have a project or idea? Let's collaborate and build something amazing 🚀
+  </p>
+
+  <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-10">
+    {/* Left Side - Contact Info */}
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-xl font-semibold mb-2">📧 Email</h3>
         <a
           href="mailto:youremail@example.com"
-          className="bg-white text-black px-6 py-3 rounded-full font-semibold hover:bg-gray-200 transition"
+          className="text-gray-300 hover:text-white transition"
         >
-          Send Email
+          youremail@example.com
         </a>
-      </section>
+      </div>
+      <div>
+        <h3 className="text-xl font-semibold mb-2">🌍 Location</h3>
+        <p className="text-gray-300">Colombo, Sri Lanka</p>
+      </div>
+      <div>
+        <h3 className="text-xl font-semibold mb-2">🔗 Social</h3>
+        <div className="flex space-x-5">
+          <a href="#" className="hover:text-blue-400 transition">
+            <i className="fab fa-linkedin fa-lg"></i>
+          </a>
+          <a href="#" className="hover:text-pink-400 transition">
+            <i className="fab fa-instagram fa-lg"></i>
+          </a>
+          <a href="#" className="hover:text-sky-400 transition">
+            <i className="fab fa-twitter fa-lg"></i>
+          </a>
+          <a href="#" className="hover:text-gray-400 transition">
+            <i className="fab fa-github fa-lg"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* Right Side - Contact Form */}
+    <motion.form
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.2 }}
+      viewport={{ once: true }}
+      className="space-y-4 bg-white/5 p-6 rounded-2xl shadow-lg backdrop-blur-md"
+    >
+      <input
+        type="text"
+        placeholder="Your Name"
+        className="w-full px-4 py-3 rounded-md bg-white/10 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400"
+      />
+      <input
+        type="email"
+        placeholder="Your Email"
+        className="w-full px-4 py-3 rounded-md bg-white/10 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400"
+      />
+      <textarea
+        rows={4}
+        placeholder="Your Message"
+        className="w-full px-4 py-3 rounded-md bg-white/10 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-400"
+      ></textarea>
+      <button
+        type="submit"
+        className="w-full bg-green-500 hover:bg-green-600 text-black font-semibold py-3 rounded-md transition"
+      >
+        Send Message
+      </button>
+    </motion.form>
+  </div>
+</section>
+
 
 
     
