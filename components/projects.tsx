@@ -6,13 +6,13 @@ import { useState } from "react";
 
 export default function ProjectsSlider() {
   const projects = [
-    { title: "Creative Branding", desc: "Full brand identity design", img: "/images/project1.jpg" },
-    { title: "E-Commerce Website", desc: "Modern & responsive shop", img: "/images/project2.jpg" },
-    { title: "Mobile App UI", desc: "Clean and intuitive design", img: "/images/project3.jpg" },
-    { title: "Portfolio Website", desc: "Personal brand showcase", img: "/images/project4.jpg" },
-    { title: "Marketing Campaign", desc: "Social media & ads", img: "/images/project5.jpg" },
-    { title: "AR/VR Experience", desc: "Immersive product demo", img: "/images/project6.jpg" },
-    { title: "Restaurant App", desc: "Online ordering system", img: "/images/project7.jpg" },
+    { title: "Creative Branding", desc: "Full brand identity design", img: "/CreativeBranding.jpg"},
+    { title: "E-Commerce Website", desc: "Modern & responsive shop", img: "/E-Commerce Website.jpg" },
+    { title: "Mobile App UI", desc: "Clean and intuitive design", img: "/Mobile App UI.jpg" },
+    { title: "Portfolio Website", desc: "Personal brand showcase", img: "/Portfolio Website.jpg" },
+    { title: "Marketing Campaign", desc: "Social media & ads", img: "/Marketing Campaign.jpg" },
+    { title: "AR/VR Experience", desc: "Immersive product demo", img: "/ARVR Experience.jpg" },
+    { title: "Restaurant App", desc: "Online ordering system", img: "/Portfolio Website.jpg" },
   ];
 
   const [centerIndex, setCenterIndex] = useState(0);
@@ -38,7 +38,7 @@ export default function ProjectsSlider() {
 
   return (
     <section className="relative mt-24 mb-10">
-      <p className="text-green-400 uppercase tracking-widest mb-2 text-center">Our Projects</p>
+      <p className="text-green-400 uppercase tracking-widest mb-2 text-center">My Projects</p>
       <h2 className="text-4xl md:text-5xl font-bold mb-6 text-center">
         Recent <span className="text-green-500">Work</span>
       </h2>

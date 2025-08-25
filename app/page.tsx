@@ -2,9 +2,11 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { motion } from 'framer-motion';
+
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import Image from 'next/image';
 import ProjectsSlider from '@/components/projects';
+
 
 
 const Home = () => {
@@ -99,12 +101,12 @@ const Home = () => {
 
     
 
-      {/* 🎯 Hero Section */}
+      {/* Hero Section */}
       <section
       ref={heroRef}
       className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-20 overflow-hidden"
     >
-      {/* 🔮 Animated Gradient Background */}
+      {/* Animated Gradient Background */}
       <div className="hero-bg absolute inset-0 opacity-70" />
 
       {/* Content */}
@@ -119,8 +121,8 @@ const Home = () => {
 
       <div className="hero-buttons mt-10 flex gap-4 z-10 relative">
         <a
-          href="#projects"
-          className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition"
+          href="/projects"
+          className="bg-white text-black px-6 py-2 rounded-full font-semibold hover:bg-green-500 transition"
         >
           View Projects
         </a>
@@ -134,7 +136,7 @@ const Home = () => {
         <a
           href="https://linkedin.com/in/yourprofile"
           target="_blank"
-          className="text-white hover:text-pink-500"
+          className="text-white hover:text-blue-400"
         >
           <FaLinkedin size={28} />
         </a>
@@ -150,7 +152,55 @@ const Home = () => {
 
       
       
+ {/* CTA Section */}
+<section className="relative h-[600px] flex items-center justify-center overflow-hidden">
+  {/* Background Image + Overlay */}
+  <div
+    className="absolute inset-0"
+    data-aos="zoom-in-up"
+    data-aos-duration="1000"
+  >
+    <div className="relative w-full h-full">
+      <img
+        src="/dinuka-cover.png"
+        alt="Cover"
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/50" />
+    </div>
+  </div>
 
+  {/* Foreground Content */}
+  <div className="relative text-center z-10 px-4">
+    <h2
+      className="text-3xl md:text-5xl font-bold text-white"
+      data-aos="fade-up"
+      data-aos-delay="200"
+      data-aos-duration="800"
+    >
+      We Are Always Ready To Take A Perfect Shot
+    </h2>
+
+    <p
+      className="mt-4 text-lg text-gray-200 max-w-2xl mx-auto"
+      data-aos="fade-up"
+      data-aos-delay="400"
+    >
+      Capture your best moments with creativity, passion, and perfection.
+    </p>
+
+    <div className="mt-8" data-aos="zoom-in" data-aos-delay="600">
+      <button className="px-8 py-3 bg-white text-black rounded-md font-semibold shadow-lg hover:bg-gray-200 transition">
+        Get Started
+      </button>
+    </div>
+  </div>
+</section>
+
+{/* 🛠 Projects */}
+
+  <ProjectsSlider />
+  
 <section
   id="about"
   className="relative py-32 px-6 md:px-20 bg-black/60 backdrop-blur-2xl text-white overflow-hidden"
@@ -164,8 +214,10 @@ const Home = () => {
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
   }}
+  
 >
   {/* Overlay for better text contrast */}
+  
   <div className="absolute inset-0 bg-black/60 backdrop-blur-sm z-0"></div>
 
   <div className="relative z-10">
@@ -210,9 +262,7 @@ const Home = () => {
 </section>
 
 
-{/* 🛠 Projects */}
 
-  <ProjectsSlider />
 
 
 

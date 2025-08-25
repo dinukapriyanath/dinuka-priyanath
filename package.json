@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "aos": "^2.3.4",
+    "aso": "^1.1.1",
     "framer-motion": "^12.23.3",
     "gsap": "^3.13.0",
     "next": "15.3.5",
