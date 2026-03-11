@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function ProjectsSlider() {
   const projects = [
     { title: "Creative Branding", desc: "Full brand identity design", img: "/CreativeBranding.jpg"},
-    { title: "E-Commerce Website", desc: "Modern & responsive shop", img: "/E-Commerce Website.jpg" },
+    { title: "E-Commerce Website", desc: "Modern & responsive shop", img: "/Contact Us 1.png" },
     { title: "Mobile App UI", desc: "Clean and intuitive design", img: "/Mobile App UI.jpg" },
     { title: "Portfolio Website", desc: "Personal brand showcase", img: "/Portfolio Website.jpg" },
     { title: "Marketing Campaign", desc: "Social media & ads", img: "/Marketing Campaign.jpg" },

@@ -6,6 +6,7 @@ import Link from "next/link";
 import Footer from "@/components/layout/footer";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loader from "@/components/Loader";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,12 +28,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/contact">Contact</Link>
           </nav>
         </header> */}
+        <Loader />
         <Navbar/>
         <main className="p-6">{children}</main>
         <Footer/>
         {/* <footer className="text-center text-sm text-gray-500 mt-10 p-4 border-t">
           © 2025 Dinuka Priyanath
         </footer> */}
+        
+        
       </body>
     </html>
   );

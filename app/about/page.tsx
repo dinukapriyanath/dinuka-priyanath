@@ -31,6 +31,7 @@ export default function AdvancedAboutHero() {
     };
   }, []);
 
+  
   return (
     <main>
     <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
