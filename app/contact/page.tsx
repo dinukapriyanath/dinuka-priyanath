@@ -1,5 +1,3 @@
-// app/contact/page.tsx (Next.js 13+ with App Router)
-
 "use client";
 import { useEffect } from "react";
 import AOS from "aos";
@@ -154,7 +152,7 @@ export default function ContactPage() {
                 <span className="text-green-400 text-xl"><i className="fas fa-phone-alt"></i></span>
                 <div>
                   <h3 className="font-bold">Phone</h3>
-                  <p className="text-gray-400">+6282 4032 567</p>
+                  <p className="text-gray-400">+94 12 345 6789</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -168,15 +166,17 @@ export default function ContactPage() {
                 <span className="text-green-500 text-xl"><i className="fab fa-whatsapp"></i></span>
                 <div>
                   <h3 className="font-bold">WhatsApp</h3>
-                  <p className="text-gray-400">082-245-7253</p>
+                  <p className="text-gray-400">+94 12 345 6789</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <span className="text-yellow-400 text-xl"><i className="fas fa-map-marker-alt"></i></span>
                 <div>
                   <h3 className="font-bold">Office</h3>
-                  <p className="text-gray-400">2443 Oak Ridge Omaha, QA 45065</p>
+                  <p className="text-gray-400">123, 1st st, somewhere</p>
                 </div>
+
+                
               </div>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function ContactPage() {
       {/* Footer */}
       <footer className="bg-black py-10 text-center border-t border-gray-800">
       <p className="text-gray-500">
-        Copyright © 2025 Vigraph | Powered by Vigraph
+        Copyright © 2025 Dinuka.dev | Powered by Dinuka.dev
       </p>
       </footer>
     </div>

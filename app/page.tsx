@@ -92,6 +92,7 @@ const Home = () => {
           className="absolute inset-0 w-full h-full object-cover opacity-50"
           src="hero7.mp4" // your video path in public/videos
           autoPlay
+          loop
           muted
           playsInline
         ></video>
