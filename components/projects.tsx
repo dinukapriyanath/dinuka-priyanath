@@ -47,11 +47,11 @@ export default function ProjectsSlider() {
       </p>
 
       {/* Fade effect left */}
-      <div className="absolute top-0 left-0 w-[50vh] h-full bg-gradient-to-r from-black/70 via-black/50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[40vh] h-full bg-gradient-to-r from-black/70 via-black/50 to-transparent z-10 pointer-events-none" />
 
 
       {/* Fade effect right */}
-      <div className="absolute top-0 right-0 w-[50vh] h-full bg-gradient-to-l from-black/70 via-black/50 to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[40vh] h-full bg-gradient-to-l from-black/70 via-black/50 to-transparent z-10 pointer-events-none" />
 
       <Slider {...settings}>
         {projects.map((project, index) => {

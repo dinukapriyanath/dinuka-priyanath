@@ -7,7 +7,7 @@ import Image from 'next/image';
 const Footer = () => {
   const year = new Date().getFullYear();
 
-  
+
 
   return (
     <motion.footer

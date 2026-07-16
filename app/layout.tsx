@@ -29,14 +29,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </header> */}
         <Loader />
-        <Navbar/>
+        <Navbar />
         <main className="p-6">{children}</main>
-        <Footer/>
+        <Footer />
         {/* <footer className="text-center text-sm text-gray-500 mt-10 p-4 border-t">
           © 2025 Dinuka Priyanath
         </footer> */}
-        
-        
+
+
       </body>
     </html>
   );

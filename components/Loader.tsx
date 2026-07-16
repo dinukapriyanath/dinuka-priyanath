@@ -1,167 +1,122 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+
+const LINES = [
+  "$ init portfolio.config",
+  "$ pulling assets... ok",
+  "$ compiling experience.tsx",
+  "$ mounting <Dinuka.Dev />",
+];
 
 export default function Loader() {
   const [loading, setLoading] = useState(true);
+  const [lineIndex, setLineIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [done, setDone] = useState(false);
 
+  // Typewriter effect, line by line
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2500);
-    return () => clearTimeout(timer);
-  }, []);
+    if (lineIndex >= LINES.length) {
+      setDone(true);
+      return;
+    }
+    const current = LINES[lineIndex];
 
-  if (!loading) return null;
+    if (charIndex < current.length) {
+      const t = setTimeout(() => setCharIndex((c) => c + 1), 28);
+      return () => clearTimeout(t);
+    }
+
+    const next = setTimeout(() => {
+      setLineIndex((l) => l + 1);
+      setCharIndex(0);
+    }, 220);
+    return () => clearTimeout(next);
+  }, [lineIndex, charIndex]);
+
+  // Exit once typing finishes + a short hold
+  useEffect(() => {
+    if (!done) return;
+    const t = setTimeout(() => setLoading(false), 500);
+    return () => clearTimeout(t);
+  }, [done]);
 
   return (
-    <motion.div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-black via-black to-black overflow-hidden"
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      {/* Animated gradient orbs */}
-      <div className="absolute inset-0 overflow-hidden">
+    <AnimatePresence>
+      {loading && (
         <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-          animate={{
-            x: [0, 100, 0],
-            y: [0, -50, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-          animate={{
-            x: [0, -100, 0],
-            y: [0, 50, 0],
-            scale: [1.2, 1, 1.2],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      </div>
-
-      {/* Main loader container */}
-      <div className="relative z-10 flex flex-col items-center gap-8">
-        
-        {/* Animated logo/text */}
-        <motion.div
-          className="relative"
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black px-6"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
         >
-          {/* Glowing ring
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            style={{
-              background: "conic-gradient(from 0deg, transparent 0deg, #3b82f6 90deg, #8b5cf6 180deg, #06b6d4 270deg, transparent 360deg)",
-              filter: "blur(20px)",
-            }}
-            animate={{ rotate: 360 }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-          /> */}
-          
-          {/* Text content */}
-          <div className="relative px-12 py-8">
-            <motion.div
-              className="text-6xl font-bold tracking-wider text-white"
-            
-            >
-              Dinuka<span className="text-green-500">.Dev</span>
-            </motion.div>
+          <div className="w-full max-w-md font-mono text-sm md:text-base">
+            {/* window chrome */}
+            <div className="flex items-center gap-2 mb-4">
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="w-2.5 h-2.5 rounded-full bg-white/20" />
+              <span className="ml-3 text-white/30 text-xs tracking-widest uppercase">
+                dinuka.dev
+              </span>
+            </div>
+
+            <div className="border border-white/10 rounded-lg bg-white/[0.02] p-5 min-h-[168px]">
+              {LINES.slice(0, lineIndex).map((line, i) => (
+                <div key={i} className="text-green-500/70 leading-relaxed">
+                  {line}
+                  <span className="text-white/30"> ✓</span>
+                </div>
+              ))}
+
+              {!done && lineIndex < LINES.length && (
+                <div className="text-green-400 leading-relaxed">
+                  {LINES[lineIndex].slice(0, charIndex)}
+                  <motion.span
+                    className="inline-block w-[7px] h-[1em] bg-green-400 ml-[2px] translate-y-[1px]"
+                    animate={{ opacity: [1, 1, 0, 0] }}
+                    transition={{
+                      duration: 0.9,
+                      repeat: Infinity,
+                      times: [0, 0.5, 0.5, 1],
+                    }}
+                  />
+                </div>
+              )}
+
+              <AnimatePresence>
+                {done && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mt-3 pt-3 border-t border-white/10 text-white text-lg font-semibold tracking-wide"
+                  >
+                    Welcome<span className="text-green-500">.</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* progress dots */}
+            <div className="flex gap-1.5 mt-4 justify-center">
+              {LINES.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1 rounded-full transition-all duration-300 ${
+                    i < lineIndex
+                      ? "w-6 bg-green-500"
+                      : i === lineIndex
+                      ? "w-6 bg-green-500/40"
+                      : "w-1.5 bg-white/10"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
-
-        {/* Animated progress bar */}
-        <div className="w-64 h-1 bg-slate-800/50 rounded-full overflow-hidden backdrop-blur-sm">
-          <motion.div
-            className="h-full bg-gradient-to-r from-green-800 via-green-500 to-green-300 rounded-full"
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            transition={{
-              duration: 2.5,
-              ease: "easeInOut"
-            }}
-            style={{
-              boxShadow: "0 0 20px rgba(59, 130, 246, 0.8)",
-            }}
-          />
-        </div>
-
-        {/* Pulsing dots */}
-        <div className="flex gap-3">
-          {[0, 1, 2,].map((i) => (
-            <motion.div
-              key={i}
-              className="w-3 h-3 rounded-full bg-gradient-to-br to-white text-blue-400"
-              animate={{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                delay: i * 0.2,
-                ease: "easeInOut"
-              }}
-              style={{
-                boxShadow: "0 0 15px rgba(139, 92, 246, 0.8)",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Loading text */}
-        <motion.p
-          className="text-slate-400 text-sm tracking-widest uppercase font-light"
-          animate={{
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          Loading Experience
-        </motion.p>
-      </div>
-
-      {/* Floating particles */}
-      {[...Array(100)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white/50 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
-    </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
